@@ -36,6 +36,14 @@ Tooling: ESLint 9 flat config in each package (`eslint-config-prettier` turns of
 
 Day-by-day V1 plan and progress: `docs/ROADMAP.md`. Tick tasks off there as they are done.
 
+## Git workflow
+
+Full rules (in Uzbek) are in `docs/CONTRIBUTING.md`. In short:
+
+- `main` is protected. Work on a branch named `<type>/day<N>-<kebab-name>` (e.g. `feat/day2-auth`; no `day<N>` part for work outside the roadmap). Open a PR and squash-merge it once CI is green.
+- Commit messages and PR titles use Conventional Commits in English: `feat(server): add JWT auth module`. Scopes: `server`, `client`, `shared`, `engine`, `ci`, `deps`, `docs`. commitlint enforces this in the `commit-msg` hook, and the `PR title` workflow checks PR titles.
+- Usually one PR per roadmap day-block. Tick that day's tasks in `docs/ROADMAP.md` inside the same PR.
+
 ## Architecture (planned, built in stages)
 
 - **Persistent data** (Prisma, `server/prisma/schema.prisma`): User, QuestionSet, Question (types `MULTIPLE_CHOICE`, `CODE_OUTPUT`, `TRUE_FALSE`, `TEXT_INPUT`), GameSession (pin, mode, settings, status), GameResult.
