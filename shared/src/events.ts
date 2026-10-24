@@ -34,7 +34,10 @@ export interface ClientToServerEvents {
         | ErrorPayload,
     ) => void,
   ) => void;
-  'player:answer': (payload: { questionId: string; answer: AnswerValue }) => void;
+  'player:answer': (payload: {
+    questionId: string;
+    answer: AnswerValue;
+  }) => void;
   /** Mode-specific action, e.g. choosing a reward or hacking a player. */
   'player:action': (payload: { type: string; data?: unknown }) => void;
 }

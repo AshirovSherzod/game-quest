@@ -5,7 +5,20 @@
     "dev": "pnpm --filter @game-quest/shared build && pnpm -r --parallel --filter \"./*\" dev",
     "build": "pnpm --filter @game-quest/shared build && pnpm --filter @game-quest/server build && pnpm --filter @game-quest/client build",
     "lint": "pnpm -r lint",
-    "test": "pnpm --filter @game-quest/server test"
+    "typecheck": "pnpm --filter @game-quest/shared build && pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
-  "packageManager": "pnpm@10.28.1"
+  "packageManager": "pnpm@10.28.1",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cjs,json,md,css,yml,yaml}": "prettier --write"
+  }
 }

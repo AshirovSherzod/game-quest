@@ -11,6 +11,7 @@ V1 scope: auth (TEACHER / STUDENT roles), question sets, live games with the `cl
 ## Layout
 
 pnpm workspace monorepo:
+
 - `client/` — Next.js 15 (App Router, `src/`, Tailwind v4, next-intl, socket.io-client, Zustand). Port 3000.
 - `server/` — NestJS 11 (Prisma + PostgreSQL, Redis, Socket.io gateway, JWT). Port 4000.
 - `shared/` — `@game-quest/shared`: TS types shared by both sides (question types, mode ids, socket event contracts). Compiled to `shared/dist` (CommonJS). **Rebuild it after changing it** (`pnpm --filter @game-quest/shared build`, or it rebuilds in watch mode during `pnpm dev`).
@@ -18,14 +19,22 @@ pnpm workspace monorepo:
 ## Commands
 
 Run from the repo root:
+
 - `pnpm install`
-- `docker compose up -d` — Postgres + Redis (Docker is not installed on the dev machine yet; local installs work too, see `server/.env`)
 - `pnpm dev` — builds `shared`, then runs shared watch, client and server in parallel
-- `pnpm build` / `pnpm lint` / `pnpm test`
-- One server test: `pnpm --filter @game-quest/server test -- <file-or-pattern>` (e.g. `classic.mode.spec.ts`)
-- Server e2e tests: `pnpm --filter @game-quest/server test:e2e`
+- `pnpm build` / `pnpm lint` / `pnpm typecheck` / `pnpm test` (all packages)
+- `pnpm format` / `pnpm format:check` — Prettier, one config at the root (`.prettierrc.json`)
+- One server test (Jest): `pnpm --filter @game-quest/server test -- <file-or-pattern>` (e.g. `classic.mode.spec.ts`)
+- Server e2e tests (Jest + Supertest): `pnpm --filter @game-quest/server test:e2e`
+- One client test (Vitest + Testing Library): `pnpm --filter @game-quest/client test -- <file-or-pattern>`. Client tests are `src/**/*.test.tsx`; server tests are `*.spec.ts`.
+
+Postgres and Redis run natively on the dev machine (PostgreSQL 16 + Memurai), not in Docker: the machine can't run Docker. `docker-compose.yml` is only for machines that can.
 
 Env files: `server/.env` and `client/.env.local` (copy from the `.env.example` files).
+
+Tooling: ESLint 9 flat config in each package (`eslint-config-prettier` turns off style rules; Prettier checks style separately). A Husky pre-commit hook runs Prettier on staged files through lint-staged. CI (`.github/workflows/ci.yml`) runs format:check, typecheck, lint, test and build, then server e2e with Postgres and Redis service containers. Keep all `@nestjs/*` packages on v11: v12 is ESM-only and breaks Jest.
+
+Day-by-day V1 plan and progress: `docs/ROADMAP.md`. Tick tasks off there as they are done.
 
 ## Architecture (planned, built in stages)
 
