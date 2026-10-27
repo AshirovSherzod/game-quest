@@ -21,12 +21,12 @@ Kun oxirida bajarilganlar `[x]` bilan belgilanadi va commit qilinadi.
 
 ## Kun 0: Muhit va boshlang'ich commit
 
-- [ ] PostgreSQL 16 (native) o'rnatish, `gamequest` user va DB yaratish
-- [ ] Memurai Developer (Redis) o'rnatish
-- [ ] Ikkala servisni Manual rejimga qo'yish
-- [ ] `pnpm dev` ishlashini tekshirish
+- [x] PostgreSQL 16 (native) o'rnatish, `gamequest` user va DB yaratish
+- [x] Memurai Developer (Redis) o'rnatish
+- [x] Ikkala servisni Manual rejimga qo'yish
+- [x] `pnpm dev` ishlashini tekshirish
 - [x] `main` branch, birinchi commit, ushbu roadmap
-- [ ] CLAUDE.md'ga lokal DB/Redis sozlash izohi
+- [x] CLAUDE.md'ga lokal DB/Redis sozlash izohi
 - [x] Prettier, ESLint (3 paket), Husky + lint-staged, EditorConfig, `.gitattributes`
 - [x] Vitest + RTL (client), Jest (server), `typecheck`/`test`/`format` skriptlari
 - [x] GitHub Actions CI workflow

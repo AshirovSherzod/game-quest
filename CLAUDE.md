@@ -30,6 +30,13 @@ Run from the repo root:
 
 Postgres and Redis run natively on the dev machine (PostgreSQL 16 + Memurai), not in Docker: the machine can't run Docker. `docker-compose.yml` is only for machines that can.
 
+Local DB/Redis setup (Windows):
+
+- Services `postgresql-x64-16` and `Memurai` are set to Manual start to save RAM. Start them before working: `Start-Service postgresql-x64-16, Memurai` (admin PowerShell).
+- Postgres role `gamequest` (password `gamequest`, `CREATEDB`) owns the databases `gamequest` (dev) and `gamequest_test` (tests), matching `DATABASE_URL` in `server/.env.example`. To recreate them, run `psql -U postgres` with: `CREATE USER gamequest WITH PASSWORD 'gamequest' CREATEDB;`, `CREATE DATABASE gamequest OWNER gamequest;`, `CREATE DATABASE gamequest_test OWNER gamequest;`.
+- Memurai listens on `localhost:6379` (`REDIS_URL`). Check it with `memurai-cli ping`.
+- `psql` is in `C:\Program Files\PostgreSQL\16\bin` (added to the user PATH).
+
 Env files: `server/.env` and `client/.env.local` (copy from the `.env.example` files).
 
 Tooling: ESLint 9 flat config in each package (`eslint-config-prettier` turns off style rules; Prettier checks style separately). A Husky pre-commit hook runs Prettier on staged files through lint-staged. CI (`.github/workflows/ci.yml`) runs format:check, typecheck, lint, test and build, then server e2e with Postgres and Redis service containers. Keep all `@nestjs/*` packages on v11: v12 is ESM-only and breaks Jest.
